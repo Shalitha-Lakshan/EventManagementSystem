@@ -29,6 +29,15 @@
 </servlet-mapping>
 
 
+    <servlet>
+    <servlet-name>addVendor</servlet-name>
+    <servlet-class>servlet.addVendorServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+    <servlet-name>addVendor</servlet-name>
+    <url-pattern>/vendor</url-pattern>
+</servlet-mapping>
 
 
 </web-app>
