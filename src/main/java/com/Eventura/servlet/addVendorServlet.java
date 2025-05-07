@@ -29,6 +29,6 @@ public class addVendorServlet extends HttpServlet {
         VendorService service = new VendorService();
         service.regVendor(ven);
 
-        response.sendRedirect("vendorManagement.jsp"); // Or wherever you want to redirect
+        response.sendRedirect("vendorManagement.jsp"); //where you want to redirect
     }
 }
