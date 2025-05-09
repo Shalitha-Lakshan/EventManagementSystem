@@ -29,15 +29,69 @@
 </servlet-mapping>
 
 
-    <servlet>
-    <servlet-name>addVendor</servlet-name>
-    <servlet-class>servlet.addVendorServlet</servlet-class>
+  <servlet>
+    <servlet-name>AddVendorServlet</servlet-name>
+    <servlet-class>com.Eventura.servlets.AddVendorServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>AddVendorServlet</servlet-name>
+    <url-pattern>/AddVendorServlet</url-pattern>
+</servlet-mapping>
+
+
+ <servlet>
+    <servlet-name>VendorServlet</servlet-name>
+    <servlet-class>servlet.VendorServlet</servlet-class>
 </servlet>
 
 <servlet-mapping>
-    <servlet-name>addVendor</servlet-name>
-    <url-pattern>/vendor</url-pattern>
+    <servlet-name>VendorServlet</servlet-name>
+    <url-pattern>/read</url-pattern>
 </servlet-mapping>
 
+<servlet>
+    <servlet-name>VendorListServlet</servlet-name>
+    <servlet-class>com.Eventura.servlet.VendorListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VendorListServlet</servlet-name>
+    <url-pattern>/VendorListServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>addVendorServlet</servlet-name>
+    <servlet-class>com.Eventura.servlet.addVendorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addVendorServlet</servlet-name>
+    <url-pattern>/addVendorServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>GetAllVendors</servlet-name>
+    <servlet-class>com.Eventura.servlet.GetAllVendors</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllVendors</servlet-name>
+    <url-pattern>/GetAllVendors</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UpdateVendorServlet</servlet-name>
+    <servlet-class>com.Eventura.servlet.UpdateVendorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateVendorServlet</servlet-name>
+    <url-pattern>/UpdateVendorServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>DeleteVendorServlet</servlet-name>
+    <servlet-class>com.Eventura.servlet.DeleteVendorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteVendorServlet</servlet-name>
+    <url-pattern>/DeleteVendorServlet</url-pattern>
+  </servlet-mapping>
 
 </web-app>

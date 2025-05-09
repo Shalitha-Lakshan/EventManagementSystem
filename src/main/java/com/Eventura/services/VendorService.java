@@ -1,78 +1,155 @@
 package com.Eventura.services;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.Eventura.model.Vendor;
 import com.Eventura.utils.DBConnection;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.Connection;
+
+
+
 public class VendorService {
+	
+	//Connect DB
+	
+		private static boolean isSuccess;
+		private static Connection con = null;
+		private static Statement stmt = null;
+		private static ResultSet rs = null;
+		
+	//Insert data
+		public static boolean insertdata(String name,String nic, String email, String phone, String service, String password) {
+		
+		boolean isSuccess = false;
+		try {
+			
+			con = DBConnection.getConnection();
+			stmt = con.createStatement();
+			
+		String sql = "insert into vendors values(0,'"+name+"','"+nic+"','"+email+"','"+phone+"','"+service+"','"+password+"')";
+		
+		int rs = stmt.executeUpdate(sql);
+		if(rs > 0) {
+			isSuccess = true;
+		} else {
+			isSuccess = false;
+		}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return isSuccess;
+}
+		//Display data
+		public static List<Vendor> getById(String Id) throws SQLException {
+			
+			int convertedID = Integer.parseInt(Id);
+			
+			ArrayList<Vendor> vendor = new ArrayList<>();
+		
+		try {
+				//DBConnection
+			con = DBConnection.getConnection();
+			stmt = con.createStatement();
+			
+		
+			String sql = "select * from vendors where id '"+convertedID+"'";
+			
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				int id = rs.getInt(1);
+				String name = rs.getString(2);
+				String nic = rs.getString(3);
+				String email = rs.getString(4);
+				String phone = rs.getString(5);
+				String service = rs.getString(6);
+				String password = rs.getString(7);
+				
+				Vendor v = new Vendor(id,name,nic,email,phone,service,password);
+				vendor.add(v);
+			}
+		}
+		
+		catch(Exception e){
+			e.printStackTrace();
+		}
+			return vendor;
+			
+		}
+		
+	//Get All Data
+		public static List<Vendor> getAllVendors(){
+			
+			ArrayList<Vendor> vendors = new ArrayList<>();
 
-    // Register a vendor and return the auto-generated ID
-    public int regVendor(Vendor ven) {
-        int generatedId = -1;
-
-        String query = "INSERT INTO vendors (vendor_name, email, phone, nic, service_type, password) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setString(1, ven.getVendorName());
-            stmt.setString(2, ven.getEmail());
-            stmt.setString(3, ven.getPhone());
-            stmt.setString(4, ven.getNic());
-            stmt.setString(5, ven.getServiceType());
-            stmt.setString(6, ven.getPassword());
-
-            int affectedRows = stmt.executeUpdate();
-
-            if (affectedRows > 0) {
-                try (ResultSet rs = stmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        generatedId = rs.getInt(1);
-                        
-                        ven.setVendorID(generatedId);
-                    }
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return generatedId;
-    }
-
-	public List<Vendor> getAllVendors() {
-		 List<Vendor> vendors = new ArrayList<>();
-	        String sql = "SELECT * FROM vendor";
-
-	        try (Connection conn = DBConnection.getConnection();
-	             Statement stmt = conn.createStatement();
-	             ResultSet rs = stmt.executeQuery(sql)) {
-
-	            while (rs.next()) {
-	                Vendor v = new Vendor();
-	                v.setVendorID(rs.getInt("vendorID"));
-	                v.setVendorName(rs.getString("vendorName"));
-	                v.setEmail(rs.getString("email"));
-	                v.setPhone(rs.getString("phone"));
-	                v.setNic(rs.getString("nic"));
-	                v.setServiceType(rs.getString("serviceType"));
-	                v.setPassword(rs.getString("password"));
-	                vendors.add(v);
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-
-		return vendors;
-	}
-
+			try {
+					//DBConnection
+				con = DBConnection.getConnection();
+				stmt = con.createStatement();
+				
+			
+				String sql = "select * from vendors";
+				
+				rs = stmt.executeQuery(sql);
+				
+				while(rs.next()) {
+					int id = rs.getInt(1);
+					String name = rs.getString(2);
+					String nic = rs.getString(3);
+					String email = rs.getString(4);
+					String phone = rs.getString(5);
+					String service = rs.getString(6);
+					String password = rs.getString(7);
+					
+					Vendor v = new Vendor(id,name,nic,email,phone,service,password);
+					vendors.add(v);
+				}
+			}
+			
+			catch(Exception e){
+				e.printStackTrace();
+			}
+				return vendors;
+			
+		}
+		
+		//update data
+		public static boolean updatedata(String id,String name,String nic,String email,String phone,String service,String password ) {
+			
+			try {
+				
+				//DBConnection
+				con = DBConnection.getConnection();
+				stmt = con.createStatement();
+				
+				//SQL Query
+				String sql = "update vendors set name='"+name+"',nic='"+nic+"',email='"+email+"',phone='"+phone+"',service='"+service+"',password='"+password+"'"
+						+"where id = '"+id+"'";
+				
+				int rs = stmt.executeUpdate(sql);
+				
+				if(rs > 0) {
+					isSuccess = true;
+				} else {
+					isSuccess = false;
+				}
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			return isSuccess;
+			
+		}
   
 }
+
+
+	

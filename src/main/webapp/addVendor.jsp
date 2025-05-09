@@ -13,7 +13,7 @@
         <!-- Vendor Name -->
         <div>
             <label class="block text-gray-700 font-medium">Vendor Name</label>
-            <input type="text" name="vendorName" required
+            <input type="text" name="name" required
                    class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-orange-300" />
         </div>
 
@@ -41,7 +41,7 @@
         <!-- Service Type -->
         <div>
             <label class="block text-gray-700 font-medium">Service Type</label>
-            <select name="serviceType" required
+            <select name="service" required
                     class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-orange-300">
                 <option value="">-- Select Service Type --</option>
                 <option value="Catering">Catering</option>

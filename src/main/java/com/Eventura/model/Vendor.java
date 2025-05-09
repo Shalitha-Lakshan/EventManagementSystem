@@ -1,59 +1,84 @@
 package com.Eventura.model;
 
 public class Vendor {
-    private String vendorName;
+	
+	private int id;
+    private String name;
+    private String nic;
     private String email;
     private String phone;
-    private String nic;
-    private String serviceType;
+    private String service;
     private String password;
+    
+	public Vendor(int id, String name, String nic, String email, String phone, String service, String password) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.nic = nic;
+		this.email = email;
+		this.phone = phone;
+		this.service = service;
+		this.password = password;
+		
+		
+	}
 
-    // Getters and Setters
-    public String getVendorName() {
-        return vendorName;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setVendorName(String vendorName) {
-        this.vendorName = vendorName;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public String getNic() {
+		return nic;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public void setNic(String nic) {
+		this.nic = nic;
+	}
 
-    public String getNic() {
-        return nic;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setNic(String nic) {
-        this.nic = nic;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getServiceType() {
-        return serviceType;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getService() {
+		return service;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setService(String service) {
+		this.service = service;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+    
+    
+    
 }

@@ -1,14 +1,9 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
 <%@ page import="com.Eventura.model.Vendor" %>
-
-<%
-    List<Vendor> vendorList = (List<Vendor>) request.getAttribute("vendorList");
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -72,9 +67,12 @@
       <section class="flex-1">
         <div class="flex justify-between items-center mb-4">
           <h2 class="text-xl font-bold text-gray-700">Manage Vendors</h2>
-          <a href="addVendor.jsp" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
-            <i class="fas fa-plus mr-2"></i> Add Vendor
-          </a>
+          <div class="flex gap-2">
+          
+            <a href="addVendor.jsp" class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
+              <i class="fas fa-plus mr-2"></i> Add Vendor
+            </a>
+          </div>
         </div>
 
         <div class="overflow-x-auto bg-white border rounded shadow">
@@ -87,98 +85,26 @@
                 <th class="py-2 px-4">Email</th>
                 <th class="py-2 px-4">Phone</th>
                 <th class="py-2 px-4">Service</th>
-                <th class="py-2 px-4">Actions</th>
               </tr>
             </thead>
-            <tbody class="text-gray-700">
-              <%
-                int count = 1;
-                if (vendorList != null) {
-                  for (Vendor v : vendorList) {
-              %>
-              <tr class="border-t">
-                <td class="py-2 px-4"><%= count++ %></td>
-                <td class="py-2 px-4"><%= v.getVendorName() %></td>
-                <td class="py-2 px-4"><%= v.getNic() %></td>
-                <td class="py-2 px-4"><%= v.getEmail() %></td>
-                <td class="py-2 px-4"><%= v.getPhone() %></td>
-                <td class="py-2 px-4"><%= v.getServiceType() %></td>
-                <td class="py-2 px-4 space-x-2">
-                  <button onclick="toggleModal()" class="text-green-500 hover:text-green-700"><i class="fas fa-link"></i> Assign</button>
-                  <button class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i> Edit</button>
-                  <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i> Delete</button>
-                </td>
-              </tr>
-              <% 
-                  }
-                } else {
-              %>
-              <tr><td colspan="7" class="py-4 px-4 text-center text-gray-500">No vendors found.</td></tr>
-              <% } %>
-            </tbody>
+            <c:forEach var="vendor" items="${allVendors}">
+            <tr>
+            
+            	<td>${vendor.id}</td>
+            	<td>${vendor.name}</td>
+            	<td>${vendor.nic}</td>
+            	<td>${vendor.email}</td>
+            	<td>${vendor.phone}</td>
+            	<td>${vendor.service}</td>
+       
+            </tr>
+           </c:forEach>
           </table>
         </div>
       </section>
 
-      <!-- Vendor Status Panel -->
-      <aside class="w-full lg:w-80 bg-white border rounded shadow p-4">
-        <h2 class="text-lg font-bold text-gray-700 mb-3">Vendor Status</h2>
-        <table class="w-full text-sm">
-          <thead class="bg-orange-100">
-            <tr>
-              <th class="text-left px-3 py-2">Vendor</th>
-              <th class="text-left px-3 py-2">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-t">
-              <td class="px-3 py-2">Elite Catering</td>
-              <td class="px-3 py-2">
-                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Active</span>
-              </td>
-            </tr>
-            <tr class="border-t">
-              <td class="px-3 py-2">SoundPro Ltd.</td>
-              <td class="px-3 py-2">
-                <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs">Busy</span>
-              </td>
-            </tr>
-            <tr class="border-t">
-              <td class="px-3 py-2">Stage Crew</td>
-              <td class="px-3 py-2">
-                <span class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">Active</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </aside>
-
     </main>
   </div>
 
-  <!-- Assign Modal -->
-  <div id="assignModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-    <div class="bg-white rounded-lg p-6 w-96 shadow-lg">
-      <h3 class="text-lg font-semibold mb-4 text-gray-800">Assign Vendor to Event</h3>
-      <label class="block text-sm text-gray-700 mb-1">Select Event</label>
-      <select class="w-full border border-gray-300 rounded p-2 mb-4">
-        <option>Annual Gala</option>
-        <option>Wedding at Beach</option>
-        <option>Product Launch</option>
-      </select>
-      <div class="flex justify-end space-x-2">
-        <button onclick="toggleModal()" class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
-        <button class="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">Assign</button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function toggleModal() {
-      document.getElementById('assignModal').classList.toggle('hidden');
-    }
-  </script>
-
 </body>
 </html>
-
