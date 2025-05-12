@@ -22,6 +22,20 @@ public class Vendor {
 		
 		
 	}
+	
+	
+
+	public Vendor(String name, String nic, String email, String phone, String service, String password) {
+		super();
+		this.name = name;
+		this.nic = nic;
+		this.email = email;
+		this.phone = phone;
+		this.service = service;
+		this.password = password;
+	}
+
+
 
 	public int getId() {
 		return id;

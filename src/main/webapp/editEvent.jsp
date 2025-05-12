@@ -28,7 +28,7 @@
     <!-- Page Header -->
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold text-gray-700">Edit Event</h1>
-      <a href="eventmanagement.jsp" class="text-orange-600 hover:underline">
+      <a href="manageEvent.jsp" class="text-orange-600 hover:underline">
         <i class="fas fa-arrow-left mr-1"></i> Back to Event Management
       </a>
     </div>

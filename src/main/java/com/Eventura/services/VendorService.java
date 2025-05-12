@@ -3,13 +3,17 @@ package com.Eventura.services;
 import java.sql.Statement;
 
 import com.Eventura.model.Vendor;
+import com.Eventura.model.EventPlanner;
 import com.Eventura.utils.DBConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 
 
@@ -59,7 +63,7 @@ public class VendorService {
 			stmt = con.createStatement();
 			
 		
-			String sql = "select * from vendors where id '"+convertedID+"'";
+			String sql = "select * from vendors where id = '"+convertedID+"'";
 			
 			rs = stmt.executeQuery(sql);
 			
@@ -148,7 +152,144 @@ public class VendorService {
 			return isSuccess;
 			
 		}
+		
+	
+	//Delete data
+		public static boolean deletedata(String id) {
+			int convID = Integer.parseInt(id);
+			
+			try {
+
+				//DBConnection
+			con = DBConnection.getConnection();
+			stmt = con.createStatement();
+			
+			String sql = "delete from vendors where id = '"+convID+"'";
+			int rs = stmt.executeUpdate(sql);
+			
+			if(rs > 0) {
+				isSuccess = true;
+			} else {
+				isSuccess = false;
+			}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return isSuccess;
+			
+			
+		}
+		
+		//login validation
+		public Vendor authenticate(String email, String password) {
+	        Vendor vendor = null;
+	 
+	        try (Connection con = DBConnection.getConnection()) {
+	            String sql = "SELECT * FROM vendors WHERE email = ? AND password = ?";
+	            PreparedStatement stmt = con.prepareStatement(sql);
+	            stmt.setString(1, email);
+	            stmt.setString(2, password);
+	 
+	            ResultSet rs = stmt.executeQuery();
+	 
+	            if (rs.next()) {
+	                vendor = new Vendor(
+	                        rs.getString("name"),
+	                        rs.getString("nic"),
+	                        rs.getString("email"),
+	                        rs.getString("phone"),
+	                        rs.getString("service"),
+	                        rs.getString("password")
+	                );
+	            }
+	 
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	 
+	        return vendor;
+	    }
   
+		
+		//Display user
+		public static List<EventPlanner> userprofile (String Id){
+			
+			int convertID = Integer.parseInt(Id);
+			
+			ArrayList<EventPlanner> eventplanner = new ArrayList<>();
+			
+			try {
+				
+				//DBConnection
+				con = DBConnection.getConnection();
+				stmt = con.createStatement();
+				
+				String sql = "select * from eventplanner where id = '"+convertID+"'";
+				rs = stmt.executeQuery(sql);
+				
+				if(rs.next()) {
+					
+					int id = rs.getInt(1);
+					String name = rs.getString(2);
+					String nic = rs.getString(3);
+					String email = rs.getString(4);
+					String phone = rs.getString(5);
+					String password = rs.getString(6);
+					
+					
+					EventPlanner v = new EventPlanner (id,name,nic,email,phone,password);
+					eventplanner.add(v);
+				}
+				
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+
+			}
+			return eventplanner;
+			
+		}
+		
+		//Assign vendors
+		public Map<Integer, List<Vendor>> getVendorsGroupedByEvent() {
+		    Map<Integer, List<Vendor>> eventVendorsMap = new HashMap<>();
+
+		    String sql = "SELECT ev.event_id, v.id, v.name, v.service " +
+		                 "FROM event_vendor ev " +
+		                 "JOIN vendors v ON ev.vendor_id = v.id";
+
+		    try (Connection con = DBConnection.getConnection();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        while (rs.next()) {
+		            int eventId = rs.getInt("event_id");
+		            int vendorId = rs.getInt("id");
+		            String name = rs.getString("name");
+		            String service = rs.getString("service");
+
+		            Vendor vendor = new Vendor(vendorId, service, service, service, service, service, service);
+		            vendor.setId(vendorId);
+		            vendor.setName(name);
+		            vendor.setService(service);
+
+		            eventVendorsMap.computeIfAbsent(eventId, k -> new ArrayList<>()).add(vendor);
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		    return eventVendorsMap;
+		}
+
+		
+		
+		
+		
 }
 
 

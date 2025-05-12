@@ -1,127 +1,111 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.Eventura.model.EventPlanner" %>
+<%
+    if (session.getAttribute("eventplanner") == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Settings</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-100 h-screen flex">
+<body class="bg-gray-100 min-h-screen flex text-gray-800">
 
-  <!-- Sidebar -->
-  <aside class="w-64 bg-white shadow-lg flex-shrink-0">
-    <div class="p-6 text-xl font-bold text-orange-600">Event Planner</div>
-    <nav class="mt-8">
-      <ul>
-        <li class="px-6 py-3 hover:bg-orange-100">
-          <a href="eventPlannerDashboard.jsp" class="flex items-center text-gray-800">
-            <i class="fas fa-calendar-alt mr-2"></i> Dashboard
-          </a>
-        </li>
-        <li class="px-6 py-3 hover:bg-orange-100">
-          <a href="manageEvent.jsp" class="flex items-center text-gray-800">
-            <i class="fas fa-tasks mr-2"></i> Manage Events
-          </a>
-        </li>
-        <li class="px-6 py-3 hover:bg-orange-100">
-          <a href="vendorManagement.jsp" class="flex items-center text-gray-800">
-            <i class="fas fa-truck mr-2"></i> Manage Vendors
-          </a>
-        </li>
-        <li class="px-6 py-3 bg-orange-100 font-semibold">
-          <a href="settings.jsp" class="flex items-center text-gray-800">
-            <i class="fas fa-cogs mr-2"></i> Settings
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </aside>
+<!-- Sidebar -->
+<aside class="w-64 bg-white shadow-md flex-shrink-0">
+  <div class="p-6 text-xl font-bold text-orange-600">Event Planner</div>
+  <nav class="mt-8">
+    <ul>
+      <li class="px-6 py-3 hover:bg-orange-100">
+        <a href="eventPlannerDashboard.jsp" class="flex items-center"><i class="fas fa-calendar-alt mr-2"></i> Dashboard</a>
+      </li>
+      <li class="px-6 py-3 hover:bg-orange-100">
+        <a href="GetAllEvent" class="flex items-center"><i class="fas fa-tasks mr-2"></i> Manage Events</a>
+      </li>
+      <li class="px-6 py-3 hover:bg-orange-100">
+        <a href="GetAllVendors" class="flex items-center"><i class="fas fa-truck mr-2"></i> Manage Vendors</a>
+      </li>
+      <li class="px-6 py-3 bg-orange-100 font-semibold">
+        <a href="profilesetting.jsp" class="flex items-center"><i class="fas fa-user-cog mr-2"></i> Profile Settings</a>
+      </li>
+    </ul>
+  </nav>
+</aside>
 
-  <!-- Main Content -->
-  <div class="flex-1 flex flex-col">
+<!-- Main Content -->
+<div class="flex-1 flex flex-col">
 
-    <!-- Top Bar -->
-    <header class="bg-white shadow p-4 flex justify-between items-center">
-      <h1 class="text-2xl font-semibold text-gray-700">Settings</h1>
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-2">
-          <img src="https://i.pravatar.cc/40" alt="Admin Profile" class="w-8 h-8 rounded-full border border-gray-300">
-          <span class="text-sm text-gray-600">Admin: JohnDoe</span>
+  <!-- Top Header -->
+  <jsp:include page="header.jsp" />
+
+  <!-- Main Body -->
+  <main class="p-6 flex-grow bg-gray-50">
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md transition-transform hover:shadow-lg hover:-translate-y-1 duration-300 ease-in-out">
+
+      <!-- Avatar and Name -->
+      <div class="text-center relative group">
+        <div title="${eventplanner.name}" class="w-24 h-24 mx-auto rounded-full bg-orange-100 text-orange-600 text-3xl font-bold flex items-center justify-center shadow-inner transition transform group-hover:scale-105">
+          ${eventplanner.name.substring(0, 1)}
         </div>
-        <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
+        <h2 class="text-2xl font-bold mt-4">${eventplanner.name}</h2>
+        <p class="text-sm text-gray-500 mt-1">Planner ID: ${eventplanner.id}</p>
       </div>
-    </header>
 
-    <!-- Settings Form Area -->
-    <main class="p-6 overflow-auto flex-grow">
-      <div class="max-w-4xl mx-auto">
-
-        <!-- Back link -->
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-3xl font-bold text-gray-700">Settings</h2>
-          <a href="eventPlannerDashboard.jsp" class="text-orange-600 hover:underline">
-            <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
-          </a>
+      <!-- Profile Details -->
+      <div class="mt-10">
+        <h3 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Your Information</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-600">NIC</label>
+            <div class="mt-1 px-4 py-2 bg-gray-100 border rounded text-gray-900">${eventplanner.nic}</div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-600">Email</label>
+            <div class="mt-1 px-4 py-2 bg-gray-100 border rounded text-gray-900">${eventplanner.email}</div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-600">Phone</label>
+            <div class="mt-1 px-4 py-2 bg-gray-100 border rounded text-gray-900">${eventplanner.phone}</div>
+          </div>
         </div>
+      </div>
 
-        <form action="save-settings.jsp" method="post" class="space-y-10 bg-white p-6 rounded-lg shadow">
+      <!-- Actions -->
+      <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4 border-t pt-6">
+        <a href="updateProfile.jsp?id=${eventplanner.id}&name=${eventplanner.name}&nic=${eventplanner.nic}&email=${eventplanner.email}&phone=${eventplanner.phone}&password=${eventplanner.password}">
+          <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-5 py-2 rounded-md shadow-sm flex items-center">
+            <i class="fas fa-edit mr-2"></i> Update Profile
+          </button>
+        </a>
 
-          <!-- Profile Settings -->
-          <div>
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">👤 Profile Settings</h2>
-            <div class="space-y-4">
-              <input type="text" name="fullname" placeholder="Full Name" class="w-full border px-4 py-2 rounded" />
-              <input type="email" name="email" placeholder="Email Address" class="w-full border px-4 py-2 rounded" />
-            </div>
-          </div>
-
-          <!-- Notification Settings -->
-          <div>
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">🔔 Notifications</h2>
-            <label class="flex items-center space-x-2 text-gray-600">
-              <input type="checkbox" class="form-checkbox text-orange-500" name="notifyEmail" checked>
-              <span>Email Notifications</span>
-            </label>
-            <label class="flex items-center space-x-2 mt-2 text-gray-600">
-              <input type="checkbox" class="form-checkbox text-orange-500" name="notifySms">
-              <span>SMS Notifications</span>
-            </label>
-          </div>
-
-          <!-- Theme Settings -->
-          <div>
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">🎨 Theme Preferences</h2>
-            <label class="flex items-center space-x-2 text-gray-600">
-              <input type="checkbox" class="form-checkbox text-orange-500" name="darkMode">
-              <span>Enable Dark Mode</span>
-            </label>
-          </div>
-
-          <!-- Security Settings -->
-          <div>
-            <h2 class="text-xl font-semibold text-gray-700 mb-4">🔒 Security</h2>
-            <div class="space-y-4">
-              <input type="password" name="newPassword" placeholder="New Password" class="w-full border px-4 py-2 rounded" />
-              <input type="password" name="confirmPassword" placeholder="Confirm Password" class="w-full border px-4 py-2 rounded" />
-            </div>
-          </div>
-
-          <!-- Save Button -->
-          <div class="flex justify-end">
-            <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600">
-              <i class="fas fa-save mr-2"></i>Save Settings
-            </button>
-          </div>
-
+        <!-- Delete confirmation form -->
+        <form action="deleteProfile" method="post" onsubmit="return confirmDelete();" class="w-full sm:w-auto">
+          <input type="hidden" name="id" value="${eventplanner.id}" />
+          <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-md shadow-sm flex items-center">
+            <i class="fas fa-trash-alt mr-2"></i> Delete Profile
+          </button>
         </form>
       </div>
-    </main>
 
-  </div>
+    </div>
+  </main>
+
+</div>
+
+<!-- Confirmation Script -->
+<script>
+function confirmDelete() {
+  return confirm("Are you sure you want to delete your profile? This action cannot be undone.");
+}
+</script>
+
 </body>
 </html>

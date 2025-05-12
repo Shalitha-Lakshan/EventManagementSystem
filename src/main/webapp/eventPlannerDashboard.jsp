@@ -1,5 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.Eventura.model.EventPlanner" %>
+<%
+    // Session check
+    if (session.getAttribute("eventplanner") == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,12 +31,12 @@
           </a>
         </li>
         <li class="px-6 py-3 hover:bg-orange-100">
-          <a href="manageEvent.jsp" class="flex items-center text-gray-800">
+          <a href="GetAllEvent" class="flex items-center text-gray-800">
             <i class="fas fa-tasks mr-2"></i> Manage Events
           </a>
         </li>
         <li class="px-6 py-3 hover:bg-orange-100">
-          <a href="vendorManagement.jsp" class="flex items-center text-gray-800">
+          <a href="GetAllVendors" class="flex items-center text-gray-800">
             <i class="fas fa-truck mr-2"></i> Manage Vendors
           </a>
         </li>
@@ -43,23 +51,12 @@
 
   <!-- Main Content -->
   <div class="flex-1 flex flex-col">
-    <!-- Top Bar -->
-    <header class="bg-white shadow p-4 flex justify-between items-center">
-      <h1 class="text-2xl font-semibold text-gray-700">Dashboard</h1>
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-2">
-          <img src="https://i.pravatar.cc/40" alt="Admin Profile" class="w-8 h-8 rounded-full border border-gray-300">
-          <span class="text-sm text-gray-600">Admin: JohnDoe</span>
-        </div>
-        <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </button>
-      </div>
-    </header>
+
+    <!-- Top bar from reusable include -->
+    <jsp:include page="header.jsp" />
 
     <!-- Main Content Area -->
     <main class="p-6 overflow-auto">
-
       <!-- Event Summary Cards -->
       <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         <!-- Total Events -->
@@ -118,8 +115,6 @@
           <canvas id="vendorChart" height="180"></canvas>
         </div>
       </div>
-
-     
     </main>
   </div>
 

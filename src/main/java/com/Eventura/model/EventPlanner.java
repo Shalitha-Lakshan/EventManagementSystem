@@ -1,19 +1,36 @@
 package com.Eventura.model;
 
-public class User {
-    private String name;
-    private String nic;
-    private String email;
-    private String phone;
-    private String password;
-    
-	public User(String name, String nic, String email, String phone, String password) {
+public class EventPlanner {
+	
+	int id;
+	String name;
+	String nic;
+	String email;
+	String phone;
+	String password;
+
+	
+	
+
+	public EventPlanner(int id, String name, String nic, String email, String phone, String password) {
+		
 		super();
+		this.id = id;
 		this.name = name;
 		this.nic = nic;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+	
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -57,7 +74,6 @@ public class User {
 	}
 	
 	
-   
+	
 
-  }
-
+}

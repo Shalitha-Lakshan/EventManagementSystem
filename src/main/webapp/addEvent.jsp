@@ -1,76 +1,164 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Event</title>
+  <title>Request an Event</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/headerF.css">
+
+  <style>
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    select,
+    textarea {
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #fb923c;
+      box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.3);
+      outline: none;
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    input[type="file"]::file-selector-button {
+      background-color: #fb923c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="file"]::file-selector-button:hover {
+      background-color: #f97316;
+    }
+
+    @media (max-width: 768px) {
+      form {
+        padding: 1rem !important;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
 
-  <!-- Container -->
-  <div class="max-w-4xl mx-auto p-6">
+<body class="bg-gray-100 min-h-screen flex flex-col">
 
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-700">Create New Event</h1>
-      <a href="eventplannerdashboard.jsp" class="text-orange-600 hover:underline"><i class="fas fa-arrow-left mr-1"></i> Back to Dashboard</a>
-    </div>
+ 
 
-    <!-- Form Card -->
-    <form action="save-event.jsp" method="post" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow space-y-6">
+  <!-- FORM -->
+  <main class="flex-grow p-6 flex items-center justify-center">
+    <!-- FIXED: Removed enctype -->
+    <form action="addEventServlet" method="post" class="bg-white shadow-lg rounded p-8 max-w-2xl w-full space-y-6">
+      <h2 class="text-2xl font-bold text-gray-800 text-center">Event Request Form</h2>
 
-      <!-- Event Name -->
-      <div>
-        <label class="block mb-1 text-gray-600 font-medium">Event Name</label>
-        <input type="text" name="eventName" required placeholder="Enter event name"
-               class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-orange-500">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block mb-1 text-sm text-gray-700">Full Name</label>
+          <input type="text" name="full_name" placeholder="John Doe" class="w-full border border-gray-300 p-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1 text-sm text-gray-700">Email</label>
+          <input type="email" name="email" placeholder="john@example.com" class="w-full border border-gray-300 p-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1 text-sm text-gray-700">Phone Number</label>
+          <input type="text" name="phone" placeholder="+94771234567" pattern="[+0-9]{10,15}" class="w-full border border-gray-300 p-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1 text-sm text-gray-700">Event Date</label>
+          <input type="date" name="event_date" class="w-full border border-gray-300 p-2 rounded" required>
+        </div>
       </div>
 
-      <!-- Event Date -->
       <div>
-        <label class="block mb-1 text-gray-600 font-medium">Event Date</label>
-        <input type="date" name="eventDate" required
-               class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-orange-500">
+        <label class="block mb-1 text-sm text-gray-700">Event Title</label>
+        <input type="text" name="event_title" placeholder="e.g., John's Wedding" class="w-full border border-gray-300 p-2 rounded" required>
       </div>
 
-      <!-- Venue -->
-      <div>
-        <label class="block mb-1 text-gray-600 font-medium">Venue</label>
-        <select name="venue" required class="w-full px-4 py-2 border rounded bg-white focus:ring-2 focus:ring-orange-500">
-          <option value="" disabled selected>Select a venue</option>
-          <option>Grand Hall</option>
-          <option>Oceanview Resort</option>
-          <option>City Convention Center</option>
-          <option>Garden Plaza</option>
-        </select>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block mb-1 text-sm text-gray-700">Event Type</label>
+          <select name="event_type" class="w-full border border-gray-300 p-2 rounded" required>
+            <option disabled selected>Select type</option>
+            <option>Conference</option>
+            <option>Wedding</option>
+            <option>Seminar</option>
+            <option>Workshop</option>
+            <option>Concert</option>
+            <option>Corporate Meeting</option>
+            <option>Birthday Party</option>
+            <option>Charity Gala</option>
+          </select>
+        </div>
+        <div>
+          <label class="block mb-1 text-sm text-gray-700">Venue</label>
+          <select name="venue" class="w-full border border-gray-300 p-2 rounded" required>
+            <option disabled selected>Select venue</option>
+            <option>Shangri-La Colombo</option>
+            <option>The Grand Kandyan (Kandy)</option>
+            <option>Kingsbury Hotel Colombo</option>
+            <option>Cinnamon Grand Colombo</option>
+            <option>Blue Water Hotel (Wadduwa)</option>
+            <option>Nelum Pokuna Theatre (Colombo)</option>
+            <option>The Avenue Colombo</option>
+            <option>Waters Edge (Battaramulla)</option>
+            <option>Sky Lounge by The Kingsbury</option>
+            <option>Villa Colombo 7</option>
+          </select>
+        </div>
       </div>
 
-      <!-- Description -->
-      <div>
-        <label class="block mb-1 text-gray-600 font-medium">Event Description</label>
-        <textarea name="description" rows="4" placeholder="Details about the event"
-                  class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-orange-500"></textarea>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block mb-1 text-sm text-gray-700">Estimated Budget (LKR)</label>
+          <input type="number" name="budget" placeholder="e.g., 500000" min="0" class="w-full border border-gray-300 p-2 rounded" required>
+        </div>
+        <div>
+          <label class="block mb-1 text-sm text-gray-700">Estimated Guests</label>
+          <input type="number" name="guest_count" placeholder="e.g., 100" min="1" class="w-full border border-gray-300 p-2 rounded" required>
+        </div>
       </div>
 
-      <!-- File Upload (Optional) -->
       <div>
-        <label class="block mb-1 text-gray-600 font-medium">Upload Event Banner (Optional)</label>
-        <input type="file" name="banner" class="w-full text-gray-700 bg-white file:border file:rounded file:py-1 file:px-3 file:bg-orange-50 file:text-orange-600 file:cursor-pointer" />
+        <label class="block mb-1 text-sm text-gray-700">Special Requirements</label>
+        <textarea name="requirements" placeholder="e.g., Vegetarian menu, wheelchair access..." class="w-full border border-gray-300 p-2 rounded" rows="4"></textarea>
       </div>
 
-      <!-- Submit -->
-      <div class="flex justify-end">
-        <button type="submit" class="bg-orange-500 text-white px-6 py-2 rounded hover:bg-orange-600">
-          <i class="fas fa-check mr-2"></i>Create Event
+      <div class="text-center">
+        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded">
+          Submit Request
         </button>
+                    <br />
+            <a href="GetAllEvent" class="text-orange-600 hover:underline">
+                ← Back to Event Page
+            </a>
+        
+        
+        <p class="text-xs text-gray-500 mt-2">We respect your privacy. Your information will never be shared.</p>
       </div>
-
     </form>
-  </div>
+  </main>
 
+  
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/headerF.js"></script>
 </body>
 </html>
