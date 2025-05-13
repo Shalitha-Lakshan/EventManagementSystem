@@ -311,7 +311,44 @@ public class VendorService {
 		}
 
 		
+		//Login validate
+		public static List<Vendor> loginvalidate (String email, String password){
+			
+		ArrayList<Vendor> vendor = new ArrayList<>();
 		
+		try {
+				//DB connection
+			con = DBConnection.getConnection();
+			stmt = con.createStatement();
+			
+			String sql = "select * from vendors where email='"+email+"' and password='"+password+"'";
+			rs = stmt.executeQuery(sql);
+			
+			if (rs.next()) {
+			
+				int id = rs.getInt(1);
+				String name = rs.getString(2);
+				String nic = rs.getString(3);
+				String gmail = rs.getString(4);
+				String phone = rs.getString(5);
+				String service = rs.getString(6);
+				String pass = rs.getString(7);
+				
+				
+			
+				Vendor p = new Vendor(id,name, nic, gmail, phone, service, pass);
+				vendor.add(p);
+			}
+			
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+			
+			
+			return vendor;
+			
+		}
 		
 }
 

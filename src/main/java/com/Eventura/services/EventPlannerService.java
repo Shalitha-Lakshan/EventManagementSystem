@@ -3,6 +3,7 @@ package com.Eventura.services;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -238,6 +239,27 @@ public class EventPlannerService {
 		        }
 
 		        return isSuccess;
+		    }
+		    
+		    //Event count
+		    
+		    public int getEventPlannerCount() throws SQLException {
+		        int count = 0;
+		        String query = "SELECT COUNT(*) FROM eventplanner"; // Use actual table name
+
+		        try (Connection con = DBConnection.getConnection();
+		             PreparedStatement stmt = con.prepareStatement(query);
+		             ResultSet rs = stmt.executeQuery()) {
+
+		            if (rs.next()) {
+		                count = rs.getInt(1);
+		            }
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		            throw e;
+		        }
+
+		        return count;
 		    }
 			
 			

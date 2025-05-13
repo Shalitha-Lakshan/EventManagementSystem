@@ -1,7 +1,7 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.Eventura.model.EventPlanner" %>
 <%
-    // Session check
     if (session.getAttribute("eventplanner") == null) {
         response.sendRedirect("login.jsp");
         return;
@@ -26,7 +26,7 @@
     <nav class="mt-8">
       <ul>
         <li class="px-6 py-3 bg-orange-100 font-semibold">
-          <a href="eventPlannerDashboard.jsp" class="flex items-center text-gray-800">
+          <a href="EventDashboardServlet" class="flex items-center text-gray-800">
             <i class="fas fa-calendar-alt mr-2"></i> Dashboard
           </a>
         </li>
@@ -51,60 +51,30 @@
 
   <!-- Main Content -->
   <div class="flex-1 flex flex-col">
-
-    <!-- Top bar from reusable include -->
     <jsp:include page="header.jsp" />
 
-    <!-- Main Content Area -->
     <main class="p-6 overflow-auto">
-      <!-- Event Summary Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <!-- Total Events -->
-        <div class="bg-white p-4 rounded shadow border-l-4 border-blue-500">
-          <div class="flex justify-between items-center">
-            <div>
-              <h4 class="text-gray-600 text-sm">Total Events</h4>
-              <h2 class="text-2xl font-bold text-blue-600">12</h2>
-            </div>
-            <i class="fas fa-calendar-alt text-blue-400 text-3xl"></i>
-          </div>
+      <!-- Dashboard Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-white mb-10">
+        <div class="bg-blue-500 rounded-lg shadow p-6 text-center">
+          <div class="text-sm uppercase">Total Events</div>
+          <div class="text-3xl font-bold mt-1">${totalEvents}</div>
         </div>
-
-        <!-- Approved -->
-        <div class="bg-white p-4 rounded shadow border-l-4 border-green-500">
-          <div class="flex justify-between items-center">
-            <div>
-              <h4 class="text-gray-600 text-sm">Approved</h4>
-              <h2 class="text-2xl font-bold text-green-600">7</h2>
-            </div>
-            <i class="fas fa-check-circle text-green-400 text-3xl"></i>
-          </div>
+        <div class="bg-green-500 rounded-lg shadow p-6 text-center">
+          <div class="text-sm uppercase">Upcoming Events</div>
+          <div class="text-3xl font-bold mt-1">${upcomingEvents}</div>
         </div>
-
-        <!-- Pending -->
-        <div class="bg-white p-4 rounded shadow border-l-4 border-yellow-500">
-          <div class="flex justify-between items-center">
-            <div>
-              <h4 class="text-gray-600 text-sm">Pending</h4>
-              <h2 class="text-2xl font-bold text-yellow-600">4</h2>
-            </div>
-            <i class="fas fa-hourglass-half text-yellow-400 text-3xl"></i>
-          </div>
+        <div class="bg-purple-500 rounded-lg shadow p-6 text-center">
+          <div class="text-sm uppercase">Total Vendors</div>
+          <div class="text-3xl font-bold mt-1">${vendorCount}</div>
         </div>
-
-        <!-- Rejected -->
-        <div class="bg-white p-4 rounded shadow border-l-4 border-red-500">
-          <div class="flex justify-between items-center">
-            <div>
-              <h4 class="text-gray-600 text-sm">Rejected</h4>
-              <h2 class="text-2xl font-bold text-red-600">1</h2>
-            </div>
-            <i class="fas fa-times-circle text-red-400 text-3xl"></i>
-          </div>
+        <div class="bg-orange-500 rounded-lg shadow p-6 text-center">
+          <div class="text-sm uppercase">Top Venue</div>
+          <div class="text-lg font-semibold mt-1">${mostActiveVenue}</div>
         </div>
       </div>
 
-      <!-- Analytics Charts -->
+      <!-- Charts -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div class="bg-white p-6 rounded shadow">
           <h3 class="text-lg font-semibold text-gray-700 mb-4">Total Events Per Month</h3>
@@ -118,7 +88,7 @@
     </main>
   </div>
 
-  <!-- Chart JS Logic -->
+  <!-- Chart.js -->
   <script>
     const ctxEvents = document.getElementById('eventsChart').getContext('2d');
     new Chart(ctxEvents, {
@@ -127,7 +97,7 @@
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
           label: 'Events',
-          data: [4, 7, 3, 5, 8, 6],
+          data: [4, 7, 3, 5, 8, 6], // You can bind this dynamically if needed
           backgroundColor: 'rgba(255, 159, 64, 0.8)',
           borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1
@@ -136,8 +106,7 @@
       options: {
         responsive: true,
         plugins: {
-          legend: { display: false },
-          tooltip: { enabled: true }
+          legend: { display: false }
         },
         scales: {
           y: { beginAtZero: true }
@@ -149,10 +118,10 @@
     new Chart(ctxVendors, {
       type: 'doughnut',
       data: {
-        labels: ['Catering', 'Photography', 'Security', 'Cleaning',],
+        labels: ['Catering', 'Photography', 'Security', 'Cleaning'],
         datasets: [{
           label: 'Vendor Assignments',
-          data: [12, 8, 6, 4],
+          data: [12, 8, 6, 4], // Replace with dynamic values if available
           backgroundColor: ['#f97316', '#22c55e', '#3b82f6', '#ef4444'],
           borderColor: '#fff',
           borderWidth: 2

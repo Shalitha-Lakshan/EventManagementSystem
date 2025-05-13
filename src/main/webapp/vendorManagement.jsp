@@ -26,7 +26,7 @@
   <nav class="mt-8">
     <ul>
       <li class="px-6 py-3 hover:bg-orange-100">
-        <a href="eventPlannerDashboard.jsp" class="flex items-center text-gray-800">
+        <a href="EventDashboardServlet" class="flex items-center text-gray-800">
           <i class="fas fa-calendar-alt mr-2"></i> Dashboard
         </a>
       </li>

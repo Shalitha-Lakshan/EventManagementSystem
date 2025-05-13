@@ -196,6 +196,24 @@
     <url-pattern>/assignVendorServlet</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>vLoginServlet</servlet-name>
+    <servlet-class>com.Eventura.servlet.vLoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>vLoginServlet</servlet-name>
+    <url-pattern>/vLoginServlet</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>EventDashboardServlet</servlet-name>
+    <servlet-class>com.Eventura.servlet.EventDashboardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventDashboardServlet</servlet-name>
+    <url-pattern>/EventDashboardServlet</url-pattern>
+  </servlet-mapping>
+  
  
  
  

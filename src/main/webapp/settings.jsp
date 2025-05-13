@@ -25,7 +25,7 @@
   <nav class="mt-8">
     <ul>
       <li class="px-6 py-3 hover:bg-orange-100">
-        <a href="eventPlannerDashboard.jsp" class="flex items-center"><i class="fas fa-calendar-alt mr-2"></i> Dashboard</a>
+        <a href="EventDashboardServlet" class="flex items-center"><i class="fas fa-calendar-alt mr-2"></i> Dashboard</a>
       </li>
       <li class="px-6 py-3 hover:bg-orange-100">
         <a href="GetAllEvent" class="flex items-center"><i class="fas fa-tasks mr-2"></i> Manage Events</a>
