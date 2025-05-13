@@ -84,7 +84,7 @@
         <tbody class="divide-y divide-gray-100">
           <c:forEach var="vendor" items="${allVendors}">
             <tr class="hover:bg-gray-50">
-              <td class="px-6 py-3">${vendor.id}</td>
+              <td class="px-6 py-3">${vendor.vendorId}</td>
               <td class="px-6 py-3">${vendor.name}</td>
               <td class="px-6 py-3">${vendor.nic}</td>
               <td class="px-6 py-3">${vendor.email}</td>
@@ -92,11 +92,11 @@
               <td class="px-6 py-3">${vendor.service}</td>
               <td class="px-6 py-3">
                 <div class="flex gap-2">
-                  <a href="updateVendor.jsp?id=${vendor.id}&name=${vendor.name}&nic=${vendor.nic}&email=${vendor.email}&phone=${vendor.phone}&service=${vendor.service}&password=${vendor.password}">
+                  <a href="updateVendor.jsp?vendorId=${vendor.vendorId}&name=${vendor.name}&nic=${vendor.nic}&email=${vendor.email}&phone=${vendor.phone}&service=${vendor.service}&password=${vendor.password}">
                     <button class="bg-orange-500 hover:bg-orange-600 text-white font-medium px-3 py-1 rounded">Update</button>
                   </a>
                   <form action="DeleteVendor" method="post" onsubmit="return confirm('Are you sure you want to delete this vendor?');">
-                    <input type="hidden" name="id" value="${vendor.id}">
+                    <input type="hidden" name="vendorId" value="${vendor.vendorId}">
                     <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-medium px-3 py-1 rounded">Delete</button>
                   </form>
                 </div>

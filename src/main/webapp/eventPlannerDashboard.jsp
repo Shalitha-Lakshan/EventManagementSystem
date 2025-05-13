@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.Eventura.model.EventPlanner" %>
 <%
     // Session check
@@ -149,7 +149,7 @@
     new Chart(ctxVendors, {
       type: 'doughnut',
       data: {
-        labels: ['Elite Catering', 'SoundPro Ltd.', 'Bloom Decor', 'Stage Crew'],
+        labels: ['Catering', 'Photography', 'Security', 'Cleaning',],
         datasets: [{
           label: 'Vendor Assignments',
           data: [12, 8, 6, 4],

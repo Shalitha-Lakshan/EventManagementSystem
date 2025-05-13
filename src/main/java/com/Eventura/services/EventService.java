@@ -1,6 +1,7 @@
 package com.Eventura.services;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,8 +23,8 @@ public class EventService {
 			private static ResultSet rs = null;
 			
 			//Insert data
-			public static boolean insertdata (String fullName,String email, String phone, String eventDate, String eventTitle, String eventType
-					,String venue,double budget,int guestCount,String requirements) {
+			public static boolean insertdata (String full_name,String email, String phone, String event_date, String event_title, String event_type
+					,String venue,double budget,int guest_count,String requirements) {
 			
 			isSuccess = false;
 			try {
@@ -31,7 +32,7 @@ public class EventService {
 				con = DBConnection.getConnection();
 				stmt = con.createStatement();
 				
-			String sql = "insert into event values(0,'"+fullName+"','"+email+"','"+phone+"','"+eventDate+"','"+eventTitle+"','"+eventType+"','"+venue+"','"+budget+"','"+guestCount+"','"+requirements+"')";
+			String sql = "insert into event values(0,'"+full_name+"','"+email+"','"+phone+"','"+event_date+"','"+event_title+"','"+event_type+"','"+venue+"','"+budget+"','"+guest_count+"','"+requirements+"')";
 			
 			int rs = stmt.executeUpdate(sql);
 			if(rs > 0) {
@@ -61,26 +62,27 @@ public class EventService {
 				stmt = con.createStatement();
 				
 			
-				String sql = "select * from event where id = '"+convertedID+"'";
+				String sql = "select * from event where eventId = '"+convertedID+"'";
 				
 				rs = stmt.executeQuery(sql);
 				
 				while(rs.next()) {
 					
-					  int id = rs.getInt(1);
-					  String fullName = rs.getString(2);
+					  int eventId = rs.getInt(1);
+					  String full_name = rs.getString(2);
 				        String email =  rs.getString(3);
 				        String phone =  rs.getString(4);
-				        String eventDate =  rs.getString(5);
-				        String eventTitle =  rs.getString(6);
-				        String eventType =  rs.getString(7);
+				        String event_date =  rs.getString(5);
+				        String event_title =  rs.getString(6);
+				        String event_type =  rs.getString(7);
 				        String venue =  rs.getString(8);
 				        Double budget = rs.getDouble(9);
-				        int guestCount = rs.getInt(10);
+				        int guest_count = rs.getInt(10);
 				        String requirements = rs.getString(11);
+				        int vendorId =rs.getInt(12);
 					
-					Event eve = new Event(id,fullName,email,phone,eventDate,eventTitle,eventType,venue,
-							budget,guestCount,requirements);
+					Event eve = new Event(eventId,full_name,email,phone,event_date,event_title,event_type,venue,
+							budget,guest_count,requirements,vendorId);
 					
 					event.add(eve);
 				}
@@ -110,20 +112,21 @@ public class EventService {
 						
 						while(rs.next()) {
 
-							  int id = rs.getInt(1);
-							  String fullName = rs.getString(2);
+							  int eventId = rs.getInt(1);
+							  String full_name = rs.getString(2);
 						        String email =  rs.getString(3);
 						        String phone =  rs.getString(4);
-						        String eventDate =  rs.getString(5);
-						        String eventTitle =  rs.getString(6);
-						        String eventType =  rs.getString(7);
+						        String event_date =  rs.getString(5);
+						        String event_title =  rs.getString(6);
+						        String event_type =  rs.getString(7);
 						        String venue =  rs.getString(8);
 						        Double budget = rs.getDouble(9);
-						        int guestCount = rs.getInt(10);
+						        int guest_count = rs.getInt(10);
 						        String requirements = rs.getString(11);
+						        int vendorId =rs.getInt(12);
 							
-						        Event eve = new Event(id,fullName,email,phone,eventDate,eventTitle,eventType,venue,
-										budget,guestCount,requirements);
+						        Event eve = new Event(eventId,full_name,email,phone,event_date,event_title,event_type,venue,
+										budget,guest_count,requirements,vendorId);
 								
 								event.add(eve);
 						}
@@ -137,8 +140,8 @@ public class EventService {
 				}
 				
 				//Update deta
-				public static boolean updatedata(String id,String fullName,String email, String phone, String eventDate, String eventTitle, String eventType
-						,String venue,double budget,int guestCount,String requirements ) {
+				public static boolean updatedata(String eventId,String full_name,String email, String phone, String event_date, String event_title, String event_type
+						,String venue,double budget,int guest_count,String requirements ) {
 					
 					try {
 						
@@ -147,9 +150,9 @@ public class EventService {
 						stmt = con.createStatement();
 						
 						//SQL Query
-						String sql = "update event set fullName='"+fullName+"',email='"+email+"',phone='"+phone+"',eventDate='"+eventDate+"',eventTitle='"+eventTitle+"'"
-								+ ",eventType='"+eventType+"',venue='"+venue+"',budget='"+budget+"',guestCount='"+guestCount+"',requirements='"+requirements+"'"
-								+"where id = '"+id+"'";
+						String sql = "update event set full_name='"+full_name+"',email='"+email+"',phone='"+phone+"',event_date='"+event_date+"',event_title='"+event_title+"'"
+								+ ",event_type='"+event_type+"',venue='"+venue+"',budget='"+budget+"',guest_count='"+guest_count+"',requirements='"+requirements+"'"
+								+"where eventId = '"+eventId+"'";
 						
 						int rs = stmt.executeUpdate(sql);
 						
@@ -170,8 +173,8 @@ public class EventService {
 	
 					
 				//Delete data
-				public static boolean deletedata(String id) {
-					int convID = Integer.parseInt(id);
+				public static boolean deletedata(String eventId) {
+					int convID = Integer.parseInt(eventId);
 					
 					try {
 
@@ -179,7 +182,7 @@ public class EventService {
 					con = DBConnection.getConnection();
 					stmt = con.createStatement();
 					
-					String sql = "delete from event where id = '"+convID+"'";
+					String sql = "delete from event where eventId = '"+convID+"'";
 					int rs = stmt.executeUpdate(sql);
 					
 					if(rs > 0) {
@@ -231,68 +234,53 @@ public class EventService {
 
 			        return map;
 			    }
-
-			    // Helper: Map ResultSet to Event
-			    public static Event mapEvent(ResultSet rs) throws SQLException {
-			        return new Event(
-			            rs.getInt("id"),
-			            rs.getString("fullName"),
-			            rs.getString("email"),
-			            rs.getString("phone"),
-			            rs.getString("eventDate"),
-			            rs.getString("eventTitle"),
-			            rs.getString("eventType"),
-			            rs.getString("venue"),
-			            rs.getDouble("budget"),
-			            rs.getInt("guestCount"),
-			            rs.getString("requirements")
-			        );
-			    }
-			    
-			 // Total Events Per Month (for bar chart)
-			    public static Map<String, Integer> getMonthlyEventCounts() {
-			        Map<String, Integer> map = new HashMap<>();
-			        String sql = "SELECT MONTHNAME(STR_TO_DATE(eventDate, '%Y-%m-%d')) AS month, COUNT(*) AS count " +
-			                     "FROM event GROUP BY month ORDER BY STR_TO_DATE(eventDate, '%Y-%m-%d')";
-
-			        try (Connection con = DBConnection.getConnection();
-			             Statement stmt = con.createStatement();
-			             ResultSet rs = stmt.executeQuery(sql)) {
-
-			            while (rs.next()) {
-			                map.put(rs.getString("month"), rs.getInt("count"));
-			            }
-
+			    public boolean assignVendorToEvent(int eventId, int vendorId) {
+			        boolean result = false;
+			        try (Connection conn = DBConnection.getConnection()) {
+			            String sql = "UPDATE event SET vendorId = ? WHERE eventId = ?";
+			            PreparedStatement stmt = conn.prepareStatement(sql);
+			            stmt.setInt(1, vendorId);
+			            stmt.setInt(2, eventId);
+			 
+			            int rowsUpdated = stmt.executeUpdate();
+			            result = rowsUpdated > 0;
 			        } catch (Exception e) {
 			            e.printStackTrace();
 			        }
-
-			        return map;
+			        return result;
 			    }
-
-			    
-			 // Vendor Assignment Distribution (for donut chart)
-			    public static Map<String, Integer> getVendorAssignmentCounts() {
-			        Map<String, Integer> map = new HashMap<>();
-			        String sql = "SELECT assignedVendor, COUNT(*) AS count FROM event GROUP BY assignedVendor";
-
-			        try (Connection con = DBConnection.getConnection();
-			             Statement stmt = con.createStatement();
-			             ResultSet rs = stmt.executeQuery(sql)) {
-
+			 
+			 
+			    public List<Event> getEventsByVendorId(int vendorId) {
+			        List<Event> eventList = new ArrayList<>();
+			        try (Connection conn = DBConnection.getConnection()) {
+			            String sql = "SELECT * FROM events WHERE vendorId = ?";
+			            PreparedStatement stmt = conn.prepareStatement(sql);
+			            stmt.setInt(1, vendorId);
+			            ResultSet rs = stmt.executeQuery();
+			 
 			            while (rs.next()) {
-			                String vendor = rs.getString("assignedVendor");
-			                if (vendor == null || vendor.isEmpty()) {
-			                    vendor = "Unassigned";
-			                }
-			                map.put(vendor, rs.getInt("count"));
+			                Event event = new Event();
+			                event.setEventId(rs.getInt("eventId"));
+			                event.setFull_name(rs.getString("full_name"));
+			                event.setEmail(rs.getString("email"));
+			                event.setPhone(rs.getString("phone"));
+			                event.setEvent_date(rs.getString("event_date"));
+			                event.setEvent_title(rs.getString("event_title"));
+			                event.setEvent_type(rs.getString("event_type"));
+			                event.setVenue(rs.getString("venue"));
+			                event.setBudget(rs.getDouble("budget"));
+			                event.setGuest_count(rs.getInt("guest_count"));
+			                event.setRequirements(rs.getString("requirements"));
+			                event.setVendorId(rs.getInt("vendorId"));
+			                eventList.add(event);
 			            }
-
 			        } catch (Exception e) {
 			            e.printStackTrace();
 			        }
-
-			        return map;
+			        return eventList;
 			    }
-
+		
+			    
+			
 }

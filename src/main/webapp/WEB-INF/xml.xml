@@ -178,6 +178,24 @@
     <url-pattern>/UpdateEventStatus</url-pattern>
   </servlet-mapping>
   
+     <servlet>
+    <servlet-name>LoadAssignVendorPage</servlet-name>
+    <servlet-class>com.Eventura.servlet.LoadAssignVendorPage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoadAssignVendorPage</servlet-name>
+    <url-pattern>/LoadAssignVendorPage</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>AssignVendorServlet</servlet-name>
+    <servlet-class>com.Eventura.servlet.AssignVendorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AssignVendorServlet</servlet-name>
+    <url-pattern>/assignVendorServlet</url-pattern>
+  </servlet-mapping>
+  
  
  
  

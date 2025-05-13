@@ -34,7 +34,7 @@
         <a href="GetAllVendors" class="flex items-center"><i class="fas fa-truck mr-2"></i> Manage Vendors</a>
       </li>
       <li class="px-6 py-3 bg-orange-100 font-semibold">
-        <a href="profilesetting.jsp" class="flex items-center"><i class="fas fa-user-cog mr-2"></i> Profile Settings</a>
+        <a href="setting.jsp" class="flex items-center"><i class="fas fa-user-cog mr-2"></i> Profile Settings</a>
       </li>
     </ul>
   </nav>

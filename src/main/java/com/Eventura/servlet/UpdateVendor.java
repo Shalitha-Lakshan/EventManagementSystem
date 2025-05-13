@@ -26,7 +26,7 @@ public class UpdateVendor extends HttpServlet {
 
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
-			String id = request.getParameter("id");
+			String vendorId = request.getParameter("vendorId");
 			String name = request.getParameter("name");
 	    	String nic = request.getParameter("nic");
 	    	String email = request.getParameter("email");
@@ -35,14 +35,14 @@ public class UpdateVendor extends HttpServlet {
 	    	String password = request.getParameter("password");
 	    	
 	    	boolean isTrue;
-	    	isTrue = VendorService.updatedata(id, name, nic, email, phone, service, password);
+	    	isTrue = VendorService.updatedata(vendorId, name, nic, email, phone, service, password);
 	    	
 
 	    	if(isTrue == true) {
 	    		
 	    		
 				try {
-					List <Vendor> vendordetails = VendorService.getById(id);
+					List <Vendor> vendordetails = VendorService.getById(vendorId);
 					request.setAttribute("vendordetails", vendordetails);
 					
 

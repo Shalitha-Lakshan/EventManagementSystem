@@ -32,7 +32,7 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead>
                     <tr class="bg-orange-100 text-gray-800">
-                        <th class="px-4 py-2">#</th>
+                        <th class="px-4 py-2">ID</th>
                         <th class="px-4 py-2">Vendor Name</th>
                         <th class="px-4 py-2">NIC</th>
                         <th class="px-4 py-2">Email</th>

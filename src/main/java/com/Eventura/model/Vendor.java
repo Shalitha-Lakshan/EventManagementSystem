@@ -2,7 +2,7 @@ package com.Eventura.model;
 
 public class Vendor {
 	
-	private int id;
+	private int vendorId;
     private String name;
     private String nic;
     private String email;
@@ -10,9 +10,11 @@ public class Vendor {
     private String service;
     private String password;
     
-	public Vendor(int id, String name, String nic, String email, String phone, String service, String password) {
+    
+    
+	public Vendor(int vendorId, String name, String nic, String email, String phone, String service, String password) {
 		super();
-		this.id = id;
+		this.vendorId = vendorId;
 		this.name = name;
 		this.nic = nic;
 		this.email = email;
@@ -23,7 +25,7 @@ public class Vendor {
 		
 	}
 	
-	
+	public Vendor() {}
 
 	public Vendor(String name, String nic, String email, String phone, String service, String password) {
 		super();
@@ -37,12 +39,14 @@ public class Vendor {
 
 
 
-	public int getId() {
-		return id;
+
+
+	public int getVendorId() {
+		return vendorId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setVendorId(int vendorId) {
+		this.vendorId = vendorId;
 	}
 
 	public String getName() {

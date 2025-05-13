@@ -12,7 +12,7 @@
     
 <%
 
-	String id = request.getParameter("id");
+	String vendorId = request.getParameter("vendorId");
 	String name = request.getParameter("name");
 	String nic = request.getParameter("nic");
 	String email = request.getParameter("email");
@@ -28,7 +28,7 @@
  
  		<div>
             <label class="block text-gray-700 font-medium">ID</label>
-            <input type="text" name="id" value="<%=id%>" readonly
+            <input type="text" name="vendorId" value="<%=vendorId%>" readonly
                    class="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-orange-300" />
         </div>
         <!-- Vendor Name -->

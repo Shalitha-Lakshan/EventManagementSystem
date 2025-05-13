@@ -77,26 +77,26 @@
           <tbody>
             <c:forEach var="event" items="${allEvents}">
               <tr class="border-b hover:bg-gray-50">
-                <td class="py-2 px-4">${event.id}</td>
-                <td class="py-2 px-4">${event.fullName}</td>
-                <td class="py-2 px-4">${event.eventDate}</td>
+                <td class="py-2 px-4">${event.eventId}</td>
+                <td class="py-2 px-4">${event.full_name}</td>
+                <td class="py-2 px-4">${event.event_date}</td>
                 <td class="py-2 px-4">${event.phone}</td>
-                <td class="py-2 px-4">${event.eventType}</td>
-                <td class="py-2 px-4">${event.guestCount}</td>
+                <td class="py-2 px-4">${event.event_type}</td>
+                <td class="py-2 px-4">${event.guest_count}</td>
                 <td class="py-2 px-4">${event.budget}</td>
                 <td class="py-2 px-4 flex gap-2">
                 
 		                
   			  <td class="py-2 px-4 flex gap-2">
-		  	<a href="viewEvent.jsp?id=${event.id}
-		      &full_name=${event.fullName}
+		  	<a href="viewEvent.jsp?id=${event.eventId}
+		      &full_name=${event.full_name}
 		      &email=${event.email}
 		      &phone=${event.phone}
-		      &event_date=${event.eventDate}
-		      &event_title=${event.eventTitle}
-		      &event_type=${event.eventType}
+		      &event_date=${event.event_date}
+		      &event_title=${event.event_title}
+		      &event_type=${event.event_type}
 		      &venue=${event.venue}
-		      &guest_count=${event.guestCount}
+		      &guest_count=${event.guest_count}
 		      &budget=${event.budget}
 		      &requirements=${event.requirements}" class="inline-block">
 		    <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1 px-3 rounded">
@@ -105,13 +105,13 @@
 		  </a>
 		
 		  <form action="DeleteEvent" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');" class="inline-block">
-		    <input type="hidden" name="id" value="${event.id}" />
+		    <input type="hidden" name="id" value="${event.eventId}" />
 		    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 rounded">
 		      Delete
 		    </button>
 		  </form>
 		
-		  <a href="assignVendor.jsp?event_id=${event.id}" class="inline-block">
+		  <a href="AssignVendorServlet" class="inline-block">
 		    <button type="button" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded">
 		      Assign Vendor
 		    </button>

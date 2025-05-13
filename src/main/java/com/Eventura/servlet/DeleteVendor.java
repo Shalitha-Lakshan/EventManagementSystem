@@ -25,10 +25,10 @@ public class DeleteVendor extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String id = request.getParameter("id");
+		String vendorId = request.getParameter("vendorId");
 		
 		boolean isTrue;
-		isTrue = VendorService.deletedata(id);
+		isTrue = VendorService.deletedata(vendorId);
 		
 		if (isTrue == true) {
 			
@@ -38,7 +38,7 @@ public class DeleteVendor extends HttpServlet {
 		} else {
 			
 			try {
-				List<Vendor> vendorDetails = VendorService.getById(id);
+				List<Vendor> vendorDetails = VendorService.getById(vendorId);
 				request.setAttribute("vendorDetails", vendorDetails);
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher("wrong.jsp");

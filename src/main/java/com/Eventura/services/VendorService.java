@@ -125,7 +125,7 @@ public class VendorService {
 		}
 		
 		//update data
-		public static boolean updatedata(String id,String name,String nic,String email,String phone,String service,String password ) {
+		public static boolean updatedata(String vendorId,String name,String nic,String email,String phone,String service,String password ) {
 			
 			try {
 				
@@ -135,7 +135,7 @@ public class VendorService {
 				
 				//SQL Query
 				String sql = "update vendors set name='"+name+"',nic='"+nic+"',email='"+email+"',phone='"+phone+"',service='"+service+"',password='"+password+"'"
-						+"where id = '"+id+"'";
+						+"where vendorId = '"+vendorId+"'";
 				
 				int rs = stmt.executeUpdate(sql);
 				
@@ -155,8 +155,8 @@ public class VendorService {
 		
 	
 	//Delete data
-		public static boolean deletedata(String id) {
-			int convID = Integer.parseInt(id);
+		public static boolean deletedata(String vendorId) {
+			int convID = Integer.parseInt(vendorId);
 			
 			try {
 
@@ -164,7 +164,7 @@ public class VendorService {
 			con = DBConnection.getConnection();
 			stmt = con.createStatement();
 			
-			String sql = "delete from vendors where id = '"+convID+"'";
+			String sql = "delete from vendors where vendorId = '"+convID+"'";
 			int rs = stmt.executeUpdate(sql);
 			
 			if(rs > 0) {
@@ -227,12 +227,12 @@ public class VendorService {
 				con = DBConnection.getConnection();
 				stmt = con.createStatement();
 				
-				String sql = "select * from eventplanner where id = '"+convertID+"'";
+				String sql = "select * from eventplanner where eventId = '"+convertID+"'";
 				rs = stmt.executeQuery(sql);
 				
 				if(rs.next()) {
 					
-					int id = rs.getInt(1);
+					int eventId = rs.getInt(1);
 					String name = rs.getString(2);
 					String nic = rs.getString(3);
 					String email = rs.getString(4);
@@ -240,7 +240,7 @@ public class VendorService {
 					String password = rs.getString(6);
 					
 					
-					EventPlanner v = new EventPlanner (id,name,nic,email,phone,password);
+					EventPlanner v = new EventPlanner (eventId,name,nic,email,phone,password);
 					eventplanner.add(v);
 				}
 				
@@ -266,13 +266,13 @@ public class VendorService {
 		         ResultSet rs = stmt.executeQuery(sql)) {
 
 		        while (rs.next()) {
-		            int eventId = rs.getInt("event_id");
-		            int vendorId = rs.getInt("id");
+		            int eventId = rs.getInt("eventId");
+		            int vendorId = rs.getInt("vendorId");
 		            String name = rs.getString("name");
 		            String service = rs.getString("service");
 
 		            Vendor vendor = new Vendor(vendorId, service, service, service, service, service, service);
-		            vendor.setId(vendorId);
+		            vendor.setVendorId(vendorId);
 		            vendor.setName(name);
 		            vendor.setService(service);
 
@@ -285,8 +285,31 @@ public class VendorService {
 
 		    return eventVendorsMap;
 		}
-
 		
+		//get vendorlist
+		public static List<Vendor> getAllVendor() {
+		    List<Vendor> vendors = new ArrayList<>();
+		    String sql = "SELECT vendorId, name FROM vendors"; // Be explicit with selected columns
+
+		    try (Connection con = DBConnection.getConnection();
+		         Statement stmt = con.createStatement();
+		         ResultSet rs = stmt.executeQuery(sql)) {
+
+		        while (rs.next()) {
+		        	
+		            Vendor v = new Vendor();
+		            v.setVendorId(rs.getInt("vendorId"));
+		            v.setName(rs.getString("name"));
+		            vendors.add(v);
+		        }
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+
+		    return vendors;
+		}
+
 		
 		
 		
